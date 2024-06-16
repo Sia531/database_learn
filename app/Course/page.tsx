@@ -5,6 +5,7 @@ import {
   addCourse,
   deleteCourse,
   modifyCourse,
+  initializeDatabase,
 } from "@/utils/course_api";
 import { Course } from "@/models/model";
 
@@ -27,6 +28,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      await initializeDatabase();
       const data: Course[] = await fetchCourses();
       setCourses(data);
     };
