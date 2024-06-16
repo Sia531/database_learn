@@ -1,6 +1,8 @@
 // pages/api/db/query_course.ts
-import { NextApiRequest, NextApiResponse } from "next";
+
 import { sql } from "@vercel/postgres";
+import { NextApiRequest, NextApiResponse } from "next";
+import { isError } from "@/utils/isError";
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,10 +10,14 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     try {
-      const result = await sql`SELECT * FROM "Course";`;
+      const result = await sql`SELECT * FROM "Course"`;
       res.status(200).json(result.rows);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      if (isError(error)) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Unknown error occurred" });
+      }
     }
   } else {
     res.setHeader("Allow", ["POST"]);

@@ -2,6 +2,7 @@
 
 import { sql } from "@vercel/postgres";
 import { NextApiRequest, NextApiResponse } from "next";
+import { isError } from "@/utils/isError";
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,7 +17,11 @@ export default async function handler(
       `;
       res.status(200).json({ message: "Course added successfully" });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      if (isError(error)) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: "Unknown error occurred" });
+      }
     }
   } else {
     res.setHeader("Allow", ["POST"]);
