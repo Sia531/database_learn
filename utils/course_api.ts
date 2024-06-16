@@ -1,7 +1,8 @@
 // utils/api.ts
-const URL_BASE = "http://localhost:5000";
+const URL_BASE = "http://localhost:3000";
 
 import { Course } from "@/models/model";
+
 export const fetchCourses = async () => {
   const response = await fetch(URL_BASE + "/api/db/query_course", {
     method: "POST",

@@ -8,7 +8,7 @@ export interface Student {
 export interface Course {
   Cno: string;
   Cname: string;
-  Cpno: string;
+  Cpno: string | null;
   Ccredit: number;
 }
 export interface SC {
