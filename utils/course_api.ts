@@ -14,7 +14,12 @@ export const initializeDatabase = async () => {
 
 export const fetchCourses = async () => {
   const result = await sql`SELECT * FROM "Course"`;
-  return result.rows;
+  return result.rows.map((row) => ({
+    Cno: row.Cno,
+    Cname: row.Cname,
+    Cpno: row.Cpno,
+    Ccredit: row.Ccredit,
+  }));
 };
 
 export const addCourse = async (course: Course) => {
